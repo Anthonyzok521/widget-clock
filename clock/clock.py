@@ -34,11 +34,9 @@ class Clock:
     """Start clock"""
     def start(self) -> None:
         if self.get_config():
-            self.active = True
-            self.time_now = time.localtime()         
+            self.active = True  
         else:
             self.active = False
-        
 
     def get_config(self) -> bool:
         """Get configurations for the clock
@@ -88,31 +86,32 @@ class Clock:
             Variables:
                 time_shape (dictionary) : Shapes of show the time
         """
+        self.time_now = list(map(lambda x: int(x), time.strftime("%H:%M:%S").split(':')))
         if self.active == True:
             time_shape = {
                 'h24-sec': {
-                    'hours':    self.time_now.tm_hour, 
-                    'minutes':  self.time_now.tm_min, 
-                    'seconds':  self.time_now.tm_sec,
+                    'hours':    self.time_now[0], 
+                    'minutes':  self.time_now[1], 
+                    'seconds':  ':0'+ str(self.time_now[2]) if int(self.time_now[2]) < 10 else ':' + str(self.time_now[2]),
                     'ap' : '' 
                     },
                 'h24-nosec': {
-                    'hours':    self.time_now.tm_hour, 
-                    'minutes':  self.time_now.tm_min, 
+                    'hours':    self.time_now[0], 
+                    'minutes':  self.time_now[1], 
                     'seconds':  '',
                     'ap' : ''  
                     },
                 'h12-sec': {
-                    'hours':    int(self.time_now.tm_hour) - 12 if self.time_now.tm_hour > 12 else self.time_now.tm_hour, #Convert to 12 hours
-                    'minutes':  self.time_now.tm_min, 
-                    'seconds':  self.time_now.tm_sec,
-                    'ap' : 'am' if self.time_now.tm_hour < 12 else 'pm' 
+                    'hours':    self.time_now[0] - 12 if self.time_now[0] > 12 else self.time_now[0], #Convert to 12 hours
+                    'minutes':  self.time_now[1], 
+                    'seconds':  ':0'+ str(self.time_now[2]) if int(self.time_now[2]) < 10 else ':' + str(self.time_now[2]),
+                    'ap' : ' am' if self.time_now[0] < 12 else ' pm' 
                     },
                 'h12-nosec': {
-                    'hours':    int(self.time_now.tm_hour) - 12 if self.time_now.tm_hour > 12 else self.time_now.tm_hour,
-                    'minutes':  self.time_now.tm_min, 
+                    'hours':    self.time_now[0] - 12 if self.time_now[0] > 12 else self.time_now[0],
+                    'minutes':  self.time_now[1], 
                     'seconds':  '',
-                    'ap' : 'am' if self.time_now.tm_hour < 12 else 'pm'
+                    'ap' : ' am' if self.time_now[0] < 12 else ' pm'
                     },
                 }
             

@@ -1,1 +1,4 @@
 tkinter
+colorama
+time
+os
