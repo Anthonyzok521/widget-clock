@@ -1,3 +1,5 @@
-venv
-clock/__pycache__
-widget/__pycache__
+venv/
+clock/__pycache__/
+widget/__pycache__/
+.vscode/
+install.exe

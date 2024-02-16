@@ -19,4 +19,10 @@ Configs:
 
 ![alt configs](3.png)
 
-> Python 3.12
+## Install
+execute install.exe or move the widget-clock.exe to C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+
+## Uninstall
+remove C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\widget-clock.exe
+
+> with Python 3.12
