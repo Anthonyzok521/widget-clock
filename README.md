@@ -25,4 +25,9 @@ execute install.exe or move the widget-clock.exe to C:\ProgramData\Microsoft\Win
 ## Uninstall
 remove C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\widget-clock.exe
 
+### How compiler install.c
+```shell
+gcc install.c -o install.exe
+```
+
 > with Python 3.12
