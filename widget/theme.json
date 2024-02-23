@@ -1,0 +1,51 @@
+{
+    "themes": [
+      {
+        "midnight": {
+          "type": "dark",
+          "colors": {
+            "primary": "#0a21f5",
+              "secondary": "#ABABAB",
+              "success": "#77b300",
+              "info": "#c6c6c6",
+              "warning": "#ff8800",
+              "danger": "#cc0000",
+              "light": "#adafae",
+              "dark": "#000000",
+              "bg": "#000000",
+              "fg": "#ffffff",
+              "selectbg": "#454545",
+              "selectfg": "#ffffff",
+              "border": "#FFFFFF",
+              "inputfg": "#ffffff",
+              "inputbg": "#FFFFFF",
+              "active": "#FFFFFF"
+          }
+        }
+      },
+      {
+        "nightout": {
+          "type": "dark",
+          "colors": {
+            "primary": "#164fe2",
+              "secondary": "#222222",
+              "success": "#77b300",
+              "info": "#00AEFF",
+              "warning": "#ff8800",
+              "danger": "#cc0000",
+              "light": "#FFFFFF",
+              "dark": "#222222",
+              "bg": "grey",
+              "fg": "#ffffff",
+              "selectbg": "#FFFFFF",
+              "selectfg": "#000000",
+              "border": "#060606",
+              "inputfg": "#000000",
+              "inputbg": "#191919",
+              "active": "#000000"
+          }
+        }
+      }
+    ]
+  }
+  

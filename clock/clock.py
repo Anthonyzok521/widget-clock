@@ -1,7 +1,6 @@
 #Modulo for access the system and using color for the debuging
 import os
 import time
-import datetime
 from colorama import Fore, init
 
 #Initialize colorama
