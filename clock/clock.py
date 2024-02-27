@@ -22,13 +22,13 @@ class Clock:
                 file_cfg (str) : Is the path file of configuration
                 configs (list) : All settings in list
                 active (boolean) : Is active or not
-                time_now (None) : This is for show the clock
+                time (None) : This is for show the clock
         """
         self.path:     str  = os.path.join('C:\\Users',os.getenv('USERNAME'), 'WidgetClock')
         self.file_cfg: str  = os.path.join(self.path, 'config.cfg')    
         self.configs:  list = []
         self.active:   bool = False
-        self.time_now = None
+        self.time: dict = None
 
     """Start clock"""
     def start(self) -> None:
@@ -80,37 +80,49 @@ class Clock:
                 config.write(f'[hour_24] {h24}\n')
                 config.write(f'[seconds] {seconds}\n')
 
+    def show_zero_seconds(self, sec: str) -> str:
+        return ':0'+ sec if int(sec) < 10 else ':' + sec
+
     def show_time(self):
         """How show the time with 24 hours or 12 hours, secconds o no secconds
             Variables:
                 time_shape (dictionary) : Shapes of show the time
         """
-        self.time_now = list(map(lambda x: int(x), time.strftime("%H:%M:%S").split(':')))
+        self.time = dict([
+            ("h24", time.strftime("%H")), 
+            ("h12", time.strftime("%I")),
+            ("min", time.strftime("%M")),
+            ("sec", time.strftime("%S")),
+            ("locale", time.strftime("%p"))
+            ])
+        
+        #list(map(lambda x: int(x), time.strftime("%H%I:%M:%S%p").split(':')))
+        
         if self.active == True:
             time_shape = {
                 'h24-sec': {
-                    'hours':    self.time_now[0], 
-                    'minutes':  self.time_now[1], 
-                    'seconds':  ':0'+ str(self.time_now[2]) if int(self.time_now[2]) < 10 else ':' + str(self.time_now[2]),
+                    'hours':    self.time['h24'], 
+                    'minutes':  self.time['min'], 
+                    'seconds':  self.show_zero_seconds(self.time['sec']),
                     'ap' : '' 
                     },
                 'h24-nosec': {
-                    'hours':    self.time_now[0], 
-                    'minutes':  self.time_now[1], 
+                    'hours':    self.time['h24'], 
+                    'minutes':  self.time['min'], 
                     'seconds':  '',
                     'ap' : ''  
                     },
                 'h12-sec': {
-                    'hours':    self.time_now[0] - 12 if self.time_now[0] > 12 else self.time_now[0], #Convert to 12 hours
-                    'minutes':  self.time_now[1], 
-                    'seconds':  ':0'+ str(self.time_now[2]) if int(self.time_now[2]) < 10 else ':' + str(self.time_now[2]),
-                    'ap' : ' am' if self.time_now[0] < 12 else ' pm' 
+                    'hours':    self.time['h12'],
+                    'minutes':  self.time['min'], 
+                    'seconds':  self.show_zero_seconds(self.time['sec']),
+                    'ap' : self.time['locale']
                     },
                 'h12-nosec': {
-                    'hours':    self.time_now[0] - 12 if self.time_now[0] > 12 else self.time_now[0],
-                    'minutes':  self.time_now[1], 
+                    'hours':    self.time['h12'],
+                    'minutes':  self.time['min'], 
                     'seconds':  '',
-                    'ap' : ' am' if self.time_now[0] < 12 else ' pm'
+                    'ap' : self.time['locale']
                     },
                 }
             
