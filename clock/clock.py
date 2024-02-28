@@ -80,9 +80,6 @@ class Clock:
                 config.write(f'[hour_24] {h24}\n')
                 config.write(f'[seconds] {seconds}\n')
 
-    def show_zero_seconds(self, sec: str) -> str:
-        return ':0'+ sec if int(sec) < 10 else ':' + sec
-
     def show_time(self):
         """How show the time with 24 hours or 12 hours, secconds o no secconds
             Variables:
@@ -103,7 +100,7 @@ class Clock:
                 'h24-sec': {
                     'hours':    self.time['h24'], 
                     'minutes':  self.time['min'], 
-                    'seconds':  self.show_zero_seconds(self.time['sec']),
+                    'seconds':  self.time['sec'],
                     'ap' : '' 
                     },
                 'h24-nosec': {
@@ -115,14 +112,14 @@ class Clock:
                 'h12-sec': {
                     'hours':    self.time['h12'],
                     'minutes':  self.time['min'], 
-                    'seconds':  self.show_zero_seconds(self.time['sec']),
-                    'ap' : self.time['locale']
+                    'seconds':  self.time['sec'],
+                    'ap' :      self.time['locale']
                     },
                 'h12-nosec': {
                     'hours':    self.time['h12'],
                     'minutes':  self.time['min'], 
                     'seconds':  '',
-                    'ap' : self.time['locale']
+                    'ap' :      self.time['locale']
                     },
                 }
             

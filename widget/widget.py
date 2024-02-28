@@ -1,9 +1,10 @@
 #Modules of clock.py for initialize the clock with the widget
 from clock.clock import Clock, os
+from diagnostics.diagnostics import Diagnostics
 from tkinter import messagebox, mainloop
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
-from ttkbootstrap import Label, Menu, Meter, Separator, Window, Style
+from ttkbootstrap import Frame, Label, Menu, Meter, Separator, Window, Style
 from ttkbootstrap.constants import *
 import subprocess   #For execute the notepad
 
@@ -26,12 +27,13 @@ class Widget:
         """
         self.bgColor :  str = '-transparentcolor'
         self.fgColor :  str = 'white'
-        self.sizeW :    int = 250
+        self.sizeW :    int = 270
         self.sizeH :    int = 180
         self.fontFamily:str = 'Console'
         self.fontSize : str = '28'
 
         self.clock : Clock = Clock()
+        self.diagnostics = Diagnostics()
         self.clock.start()
 
         self.widget : Window = Window()
@@ -51,22 +53,25 @@ class Widget:
         self.widget['bg'] = 'grey'
         self.widget.attributes(self.bgColor, 'grey')    #Apply transparent in grey
         self.widget.positionfrom()
-        
-        self.text_time : Label = Label(self.widget, text='', font=f'{self.fontFamily} {self.fontSize}', padding=(20, 10))
-        self.separator: Separator = Separator(self.widget, bootstyle="info")
-        self.text_ram : Label = Label(self.widget, text='RAM', font='Verdana 8 bold')
-        self.text_cpu : Label = Label(self.widget, text='CPU', font='Verdana 8 bold')
-        self.text_temperature : Label = Label(self.widget, text='TMP', font='Verdana 8 bold')
-        self.text_space : Label = Label(self.widget, text='SPC', font='Verdana 8 bold')
-        self.text_porcent_ram : Label = Label(self.widget, text='25%', font='Verdana 8 bold')
-        self.text_porcent_cpu : Label = Label(self.widget, text='25%', font='Verdana 8 bold')        
-        self.text_porcent_space : Label = Label(self.widget, text='25%', font='Verdana 8 bold')
-        self.text_porcent_temperature : Label = Label(self.widget, text='25°', font='Verdana 8 bold')
 
-        self.ram: Meter = Meter(self.widget, metersize=40, meterthickness=5, stripethickness=5, padding=0,amountused=25 ,metertype="full", bootstyle="info", showtext=False)
-        self.cpu: Meter = Meter(self.widget, metersize=40, meterthickness=5, stripethickness=5, padding=0,amountused=25 ,metertype="full", bootstyle="info", showtext=False)
-        self.temperature: Meter = Meter(self.widget, metersize=40, meterthickness=5, stripethickness=5, padding=0,amountused=25 ,metertype="full", bootstyle="info", showtext=False)
-        self.space: Meter = Meter(self.widget, metersize=40, meterthickness=5, stripethickness=5, padding=0,amountused=25 ,metertype="full", bootstyle="info", showtext=False)
+        self.frame_time : Frame = Frame(self.widget, width=270, height=60)
+        self.frame_diagnostic : Frame = Frame(self.widget, width=270, height=60)
+        
+        self.text_time : Label = Label(self.frame_time, text='', font=f'{self.fontFamily} {self.fontSize}')
+        self.separator: Separator = Separator(self.frame_diagnostic, bootstyle="info")
+        self.text_ram : Label = Label(self.frame_diagnostic, text='RAM', font='Verdana 8 bold')
+        self.text_cpu : Label = Label(self.frame_diagnostic, text='CPU', font='Verdana 8 bold')
+        self.text_temperature : Label = Label(self.frame_diagnostic, text='TMP', font='Verdana 8 bold')
+        self.text_space : Label = Label(self.frame_diagnostic, text='SPC', font='Verdana 8 bold')
+        self.text_porcent_ram : Label = Label(self.frame_diagnostic, text='', font='Verdana 8 bold')
+        self.text_porcent_cpu : Label = Label(self.frame_diagnostic, text='', font='Verdana 8 bold')        
+        self.text_porcent_space : Label = Label(self.frame_diagnostic, text='', font='Verdana 8 bold')
+        self.text_porcent_temperature : Label = Label(self.frame_diagnostic, text='', font='Verdana 8 bold')
+
+        self.ram: Meter = Meter(self.frame_diagnostic, metersize=40, meterthickness=3, stripethickness=3, padding=0,amountused=0 ,metertype="full", bootstyle="info", showtext=False)
+        self.cpu: Meter = Meter(self.frame_diagnostic, metersize=40, meterthickness=3, stripethickness=3, padding=0,amountused=0 ,metertype="full", bootstyle="info", showtext=False)
+        self.temperature: Meter = Meter(self.frame_diagnostic, metersize=40, meterthickness=3, stripethickness=3, padding=0,amountused=0 ,metertype="full", bootstyle="info", showtext=False)
+        self.space: Meter = Meter(self.frame_diagnostic, metersize=40, meterthickness=3, stripethickness=3, padding=0,amountused=0 ,metertype="full", bootstyle="info", showtext=False)
 
         #Menu with click right
         self.menu : Menu = Menu(self.text_time, tearoff=0)
@@ -105,19 +110,71 @@ class Widget:
         else:
             messagebox.showerror(title='Error', message='Not found config file: ' + self.clock.file_cfg)
 
+    def bootstyle(self, ram, cpu, space, temperature) -> None:
+        if ram > 0 and ram < 50:
+            self.ram.configure(bootstyle="info")
+        elif ram >= 50 and ram < 80:
+            self.ram.configure(bootstyle="warning")
+        else:
+            self.ram.configure(bootstyle="danger")
+        
+        if cpu > 0 and cpu < 50:
+            self.cpu.configure(bootstyle="info")
+        elif cpu >= 50 and cpu < 80:
+            self.cpu.configure(bootstyle="warning")
+        else:
+            self.cpu.configure(bootstyle="danger")
+
+        if space > 0 and space < 50:
+            self.space.configure(bootstyle="info")
+        elif space >=50 and space < 80:
+            self.space.configure(bootstyle="warning")
+        else:
+            self.space.configure(bootstyle="danger")
+        
+        if temperature > 0 and temperature < 50:
+            self.temperature.configure(bootstyle="info")
+        elif temperature >= 50 and temperature < 80:
+            self.temperature.configure(bootstyle="warning")
+        else:
+            self.temperature.configure(bootstyle="danger")
+
     #Uppdate times
     def update(self) -> None:
         h = self.clock.show_time()['hours']
-        m = '0' + str(self.clock.show_time()['minutes']) if self.clock.show_time()['minutes'] < 10 else self.clock.show_time()['minutes']
+        m = self.clock.show_time()['minutes']
         s = self.clock.show_time()['seconds']
         ap = self.clock.show_time()['ap']
-        self.time = str(h) + ':' + str(m) + s + ap
+
+        ram = self.diagnostics.ram()
+        cpu = self.diagnostics.cpu()
+        space = self.diagnostics.space()
+        temperature = self.diagnostics.temperature()
+
+        self.bootstyle(ram, cpu, space, temperature)
+
+        self.time = h + ':' + m + ':' + s + ap
         self.text_time.configure(text=self.time) 
+
+        self.ram.configure(amountused=ram)
+        self.text_porcent_ram.configure(text=f'{ram}%')
+
+        self.cpu.configure(amountused=cpu)
+        self.text_porcent_cpu.configure(text=f'{cpu}%')
+
+        self.space.configure(amountused=space)
+        self.text_porcent_space.configure(text=f'{space}%')
+
+        self.temperature.configure(amountused=temperature)
+        self.text_porcent_temperature.configure(text=f'{temperature}%')
+
         self.widget.after(900,self.update)
 
     #Initializer
     def init(self) -> None:
-        self.text_time.grid(row=0, column=0, columnspan=4)
+        self.frame_time.pack()
+        self.frame_diagnostic.pack()
+        self.text_time.pack(expand=True)
         self.text_ram.grid(row=1, column=0)
         self.text_cpu.grid(row=1, column=1)        
         self.text_space.grid(row=1, column=2)
