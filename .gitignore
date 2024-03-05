@@ -3,3 +3,5 @@ clock/__pycache__/
 widget/__pycache__/
 .vscode/
 install.exe
+*.pyc
+output/

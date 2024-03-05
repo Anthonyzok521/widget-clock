@@ -22,7 +22,7 @@ openhardwaremonitor_sensortypes = [
 
 #OpenHardwareMonitor Library
 def initialize_openhardwaremonitor():
-    file = os.path.join(os.path.dirname(__file__),'OpenHardwareMonitorLib.dll') #Path of OpenHardwareMonitorLib.dll
+    file = os.path.join(os.path.dirname(__file__),'..','OpenHardwareMonitorLib.dll') #Path of OpenHardwareMonitorLib.dll
 
     clr.AddReference(file) #Add OpenHardwareMonitorLib.dll
 
