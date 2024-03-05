@@ -2,11 +2,11 @@
 
 Clock digital for Windows 10/11
 
-![alt clock](1.png)
+![alt clock](1.2.png)
 ---
 Is configurable
 
-![alt menu](2.png)
+![alt menu](2.2.png)
 ---
 Configs:
 
@@ -20,14 +20,6 @@ Configs:
 ![alt configs](3.png)
 
 ## Install
-execute install.exe or move the widget-clock.exe to C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
-
-## Uninstall
-remove C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\widget-clock.exe
-
-### How compiler install.c
-```shell
-gcc install.c -o install.exe
-```
+execute widget-clock-setup.exe
 
 > with Python 3.12
